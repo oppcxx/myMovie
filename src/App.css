@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+a {
+  color: #000;
+  text-decoration: none;
+}
+a.active {
+  color: orangered;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +43,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+.container {
+  display: flex;
+}
+.container .nav {
+  width: 120px;
+}
+.container .main {
+  flex: 1;
 }
