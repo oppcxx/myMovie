@@ -1,7 +1,6 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -44,7 +43,7 @@ a.active {
     transform: rotate(360deg);
   }
 }
-.container {
+/* .container {
   display: flex;
 }
 .container .nav {
@@ -52,4 +51,51 @@ a.active {
 }
 .container .main {
   flex: 1;
+} */
+/* .navw{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+} */
+.navv{
+
+  display: flex;
+  justify-content: space-around;
+  /* background-color: #efefef; */
+}
+
+.movieStyle{
+  display: flex;
+  flex-wrap: wrap;
+}
+.movieStyle > a{
+  display: flex;
+  margin-left: 3px;
+  flex-wrap: wrap;
+}
+.ant-card{
+  width: 50%;
+}
+
+.ant-card-meta-description{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.ant-card-bordered{
+  margin: 3px;
+  width: 0;
+}
+.ant-card-cover img{
+  width: 100%;
+}
+.nav{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.active{
+  color: #61dafb;
 }

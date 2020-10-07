@@ -1,5 +1,6 @@
 import Home from "./pages/home";
-import List from "./pages/list";
+import Movies from "./pages/movies";
+import Sort from "./pages/sort";
 export const routes = [
   {
     path: "/",
@@ -8,9 +9,15 @@ export const routes = [
     exact: true,
   },
   {
-    path: "/list",
-    component: List,
-    label: "热映",
+    path: "/sort",
+    component: Sort,
+    label: "分类",
+    exact: false,
+  },
+  {
+    path: "/movies",
+    component: Movies,
+    label: "影库",
     exact: false,
   },
 ];

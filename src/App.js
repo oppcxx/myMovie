@@ -1,48 +1,50 @@
 import React from "react";
-import { Link, Switch, Route, NavLink } from "react-router-dom";
-import Home from "./pages/home";
-import List from "./pages/list";
+import { Switch, Route, NavLink } from "react-router-dom";
 import Login from "./pages/login";
 import User from "./pages/user";
-import Cart from "./pages/cart";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 import { routes } from "./router";
+import Detail from "./pages/detail";
+import Reg from "./pages/reg";
 
 function App() {
   return (
     <div className="App">
-      {/* <NavLink exact to="/">
-        【首页】
-      </NavLink>
-      <NavLink to="/list">【热映】</NavLink> */}
-      {routes.map((item) => (
-        <NavLink key={item.path} to={item.path} exact={item.exact}>
-          【{item.label}】
-        </NavLink>
-      ))}
-      <NavLink to="/cart">【购物车】</NavLink>
-      <NavLink to="/user">【用户中心】</NavLink>
-      <hr />
-      <Switch>
-        {/* <Route exact path="/" component={Home} />
-        <Route path="/list" component={List} /> */}
+      {/* 导航栏 */}
+
+      <div className="navv">
         {routes.map((item) => (
-          <Route
-            key={item.path}
-            path={item.path}
-            component={item.component}
-            exact={item.exact}
-          />
+          <NavLink key={item.path} to={item.path} exact={item.exact}>
+            {item.label}
+          </NavLink>
         ))}
-        <PrivateRoute path="/cart">
-          <Cart />
-        </PrivateRoute>
-        <PrivateRoute path="/user">
-          <User />
-        </PrivateRoute>
-        <Route path="/login" component={Login} />
-      </Switch>
+        <NavLink to="/user">我的</NavLink>
+      </div>
+      <div className="content">
+        <Switch>
+          {/* <Route exact path="/" component={Home} />
+        <Route path="/list" component={List} /> */}
+          {routes.map((item) => (
+            <Route
+              key={item.path}
+              path={item.path}
+              component={item.component}
+              exact={item.exact}
+            />
+          ))}
+          <Route path="/detail" component={Detail} />
+          <PrivateRoute path="/user">
+            <User />
+          </PrivateRoute>
+          <Route path="/login" component={Login} />
+          <Route path="/reg" component={Reg} />
+        </Switch>
+      </div>
+
+
+
+
     </div>
   );
 }

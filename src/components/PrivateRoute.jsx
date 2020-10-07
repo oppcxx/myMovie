@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { isLogined } from "../utils/auth";
+import { isLogined } from "../utils/tools";
 // 创建一个自定义的私有路由组件
 function PrivateRoute(props) {
   const { children, path } = props;
