@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link, Route } from "react-router-dom";
-import { Row, Col,Card,Button } from 'antd';
-import Detail from './detail'
+import { NavLink, Route } from "react-router-dom";
+import { Row, Col, Card, Button } from 'antd';
+import Detail from './detail';
+import { getMoviesListApi } from "../services/movies";
 import '../App.css';
 
-function Movies() {
+function Movies(props) {
+  console.log(props);
   const { Meta } = Card;
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [chanal, setChanal] = useState(1);
-  const [isShow,setIsShow] = useState(false)
+  const [id, setId] = useState(1);
+  const [isShow, setIsShow] = useState(false)
+  const cate = ['电影', '动漫', '电视剧', '综艺', '纪录片'];
   useEffect(() => {
-    fetch(
-      `https://pcw-api.iqiyi.com/search/recommend/list?channel_id=${chanal}&data_type=1&mode=11&page_id=${page}&ret_num=48`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res.data.list);
-        setMovies(res.data.list);
-      });
-  }, [page, chanal]);
-
+    getMoviesListApi({ category: id,page,per:96 }).then(res => {
+      console.log(res);
+      setMovies(res.list)
+    })
+  }, [id,page]);
+  const loadMore = () => {
+    setPage(page + 1);
+  }
   return (
     <div>
       <div className="container">
@@ -28,12 +29,16 @@ function Movies() {
         <div className="nav">
 
           <Row>
-            <Col className={isShow?'active':''} xs={{ span: 3, offset: 1 }} onClick={() => { setChanal(1);setIsShow(true)}}>电影</Col>
-            <Col  xs={{ span: 3, offset: 1 }} onClick={() => { setChanal(2); }}>电视剧</Col>
-            <Col  xs={{ span: 3, offset: 1 }} onClick={() => { setChanal(3);  }}>纪录片</Col>
-            <Col  xs={{ span: 3, offset: 1 }} onClick={() => { setChanal(4);  }}>科幻</Col>
-            <Col xs={{ span: 3, offset: 1 }} onClick={() => { setChanal(5);  }}>舞台</Col>
-            <Col xs={{ span: 3, offset: 1 }} onClick={() => { setChanal(6);  }}>真人秀</Col>
+            {cate.map((item, index) => {
+              return (
+                <Col key={index} xs={{ span: 3, offset: 1 }} onClick={() => { setId(index + 1); setIsShow(true); }}>{item}</Col>
+              )
+            })}
+            {/* <Col className={isShow ? 'active' : ''} xs={{ span: 3, offset: 1 }} onClick={() => { setId(1); setIsShow(true) }}>电影</Col>
+            <Col xs={{ span: 4, offset: 1 }} onClick={() => { setId(2); }}>动漫</Col>
+            <Col xs={{ span: 4, offset: 1 }} onClick={() => { setId(3); }}>电视剧</Col>
+            <Col xs={{ span: 4, offset: 1 }} onClick={() => { setId(4); }}>综艺</Col>
+            <Col xs={{ span: 4, offset: 1 }} onClick={() => { setId(5); }}>纪录片</Col> */}
           </Row>
         </div>
         {/* 影片内容 */}
@@ -41,26 +46,26 @@ function Movies() {
         <div className="movieStyle">
           {movies.map((item) => {
             return (
-              <Link
-                key={item.albumId}
+              <NavLink
+                key={item.id}
                 to={{
                   pathname: '/detail',
-                  search: '?id=' + item.albumId,
+                  search: '?id=' + item.id,
                   state: { ...item }
                 }}>
                 <Card
-                  key={item.albumId}
+                  key={item.id}
                   hoverable
                   style={{ width: 180 }}
-                  cover={<img alt={item.name} src={item.imageUrl} />}
+                  cover={<img alt={item.name} src={item.coverImage} />}
                 >
-                  <Meta title={item.albumName} description={item.description} />
+                  <Meta title={item.name} description={item.desc} />
                 </Card>
-              </Link>
+              </NavLink>
             )
           })}
         </div>
-
+        {/* <Button type="primary" onClick={loadMore}>下一页</Button> */}
       </div>
     </div>
   );
