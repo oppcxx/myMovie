@@ -7,6 +7,9 @@ import "./App.css";
 import { routes } from "./router";
 import Detail from "./pages/detail";
 import Reg from "./pages/reg";
+import MyFavs from "./pages/myFavs";
+import ModifyMyInfo from "./pages/modifyMyInfo";
+import ModifyPassword from "./pages/modifyPassword";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
           </PrivateRoute>
           <Route path="/login" component={Login} />
           <Route path="/reg" component={Reg} />
+          <Route path="/myFavs" component={MyFavs} />
+          <Route path="/modifyMyInfo" component={ModifyMyInfo} />
+          <Route path="/modifyPassword" component={ModifyPassword} />
         </Switch>
       </div>
 

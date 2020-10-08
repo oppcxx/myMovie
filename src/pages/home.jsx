@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Carousel, Button } from 'antd';
 import '../App.css';
 import { Link } from "react-router-dom";
+import { getMoviesListApi } from "../services/movies";
+import Movies from "./movies";
 
 function Home(props) {
   const contentStyle = {
@@ -19,12 +21,16 @@ function Home(props) {
 
   }
   useEffect(() => {
-    fetch(`https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=${page}&ret_num=48`)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res.data.list);
-        setMovies([...moveis, ...res.data.list]);
-      })
+    // fetch(`https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode=11&page_id=${page}&ret_num=48`)
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     console.log(res.data.list);
+    //     setMovies([...moveis, ...res.data.list]);
+    //   })
+    getMoviesListApi({page}).then(res=>{
+      console.log(res.list);
+      setMovies([...moveis,...res.list])
+    })
   }, [page])
   return (
     <div>
@@ -49,19 +55,19 @@ function Home(props) {
         {moveis.map((item) => {
           return (
             <Link
-              key={item.albumId}
+              key={item.id}
               to={{
                 pathname: '/detail',
-                search: '?id=' + item.albumId,
+                search: '?id=' + item.id,
                 state: { ...item }
               }}>
               <Card
-                key={item.albumId}
+                key={item.id}
                 hoverable
                 style={{ width: 180 }}
-                cover={<img alt={item.name} src={item.imageUrl} />}
+                cover={<img alt={item.name} src={item.coverImage} />}
               >
-                <Meta title={item.albumName} description={item.description} />
+                <Meta title={item.name} description={item.desc} />
               </Card>
             </Link>
           )

@@ -97,5 +97,5 @@ a.active {
 }
 
 .active{
-  color: #61dafb;
+  color: red!important;
 }
